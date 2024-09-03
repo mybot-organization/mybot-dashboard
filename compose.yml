@@ -1,0 +1,22 @@
+services:
+  mybot_dashboard:
+    init: true
+    build:
+      dockerfile: ./Dockerfile
+    tty: true
+    restart: always
+    networks:
+      - mybot_default
+    ports:
+      - 8000:8000
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app
+        - action: rebuild
+          path: ./requirements.txt
+
+networks:
+  mybot_default:
+    external: true
